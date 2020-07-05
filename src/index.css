@@ -5,9 +5,257 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(80, 78, 78);
+  font-weight: 600;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.book-main__header{
+  font-size: 38px;
+  font-weight: 600;
+  text-align: center;
+  height: 62px;
+  background-color: #221717;
+  color: #E2DDDD;
+  border-bottom: 2px solid #E2DDDD;
+}
+
+.book-list__wrapper{
+  width: 600px;
+  margin-top: 50px;
+  margin: 50px auto;
+}
+
+.book-list__header{
+  border-top: 1px solid #E2DDDD;
+  width: 100%;
+  display: flex;
+  padding-bottom: 8px;
+  padding-top: 8px;
+}
+
+.book-list__header-item{
+  width: 43%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #E2DDDD;
+}
+
+.book-item__wrapper{
+  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
+  padding-left: 30px;
+  height: 70px;
+  font-size: 14px;
+  border: solid black 0px;
+  background-color: #e2dddd;
+  border-bottom: #CCCCCC 1px solid;
+  border-radius: 3px;
+  margin-top: 5px;
+  border-right: 1px solid rgb(139, 133, 133);
+  border-left: 1px solid rgb(139, 133, 133);
+  font-weight: 500;
+  transition: 0.1s;
+}
+
+.book-item__wrapper.open{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin-top: 5px;
+  padding: 0px;
+  height: 130px;
+  padding-left: 0px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.book-item__image-wrapper{
+  height: 100%;
+  width: 20%;
+}
+
+.book-item__image-open{
+  height: 100%;
+  transition: 0.3s;
+  max-width: 100%;
+}
+
+.book-item__content-block{
+  margin: 0px;
+  height: 100%;
+  width: 60%;
+  padding-left: 15px;
+}
+
+.book-item__icon-block{
+  height: 100%;
+}
+
+.book-item__title-open{
+  color: rgb(65, 59, 59);
+  height: 15px;
+}
+
+.book-item__author-open{
+  color: rgb(65, 59, 59);
+  height: 15px;
+}
+
+.book-item__description-open{
+  height: 70px;
+  color: rgb(65, 59, 59);
+}
+
+.book-item__title{
+  width: 50%;
+  padding-left: 35px;
+  margin: auto 0;
+  text-align: left;
+  color: rgb(65, 59, 59);
+}
+
+.book-item__author{
+  margin: auto 0;
+  width: 50%;
+  padding-left: 30px;
+  color: rgb(65, 59, 59);
+}
+
+.book-item__edit-icon{
+  font-size: 12px;
+  height: 70px;
+  padding-right: 15px;
+  display: table-cell;
+  vertical-align:  middle;
+  cursor: pointer;
+}
+
+.book-item__delete-icon{
+  font-size: 12px;
+  height: 70px;
+  display:  table-cell;
+  padding-right: 15px;
+  vertical-align:  middle;
+  cursor: pointer;
+}
+
+.modal-add-book__wrapper{
+  width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: -30px;
+  margin-bottom: 400px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #E2DDDD;
+
+}
+
+.modal-add-book__input{
+  display: block;
+  margin: 10px auto;
+  height: 23px;
+  border-radius: 2px;
+  border: black solid 1px;
+  width: 300px;
+  height: 35px;
+  padding-left: 10px;
+}
+.modal-add-book__button-save{
+  width: 140px;
+  height: 36px;
+  font-size: 13px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #f1c40f;
+  color: white;
+  box-shadow: 0 0 0 0px white;
+  text-align: center;
+  text-transform: uppercase;
+  transition: .4s;  
+  font-weight: bold;
+  background-color: #221717;
+}
+
+.modal-add-book__button-cancel{
+  margin-top: 20px;
+  width: 140px;
+  height: 36px;
+  font-size: 13px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #da1d1d;
+  color: white;
+  box-shadow: 0 0 0 0px white;
+  text-align: center;
+  text-transform: uppercase;
+  transition: .4s;  
+  font-weight: bold;
+  background-color: #221717;
+}
+
+.modal-add-book__button-add{
+  width: 160px;
+  height: 40px;
+  margin-top: 7px;
+  font-size: 14px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #f1c40f;
+  color: white;
+  box-shadow: 0 0 0 0px white;
+  text-align: center;
+  text-transform: uppercase;
+  transition: .1s;  
+  font-weight: bold;
+  background-color: #221717;
+}
+
+.modal-add-book__button-cancel:hover{
+  background-color: #da1d1d;
+}
+
+.modal-add-book__button-save:hover{
+  background-color: #6b661e;
+  border-bottom: 2px solid #6b661e;
+}
+
+.modal-add-book__button-add:hover{
+  border-color: #f1c40f;
+  width: 180px;
+  background-color: #202e29;
+}
+
+.book-filter__wrapper{
+  text-align: right;
+  width: 250px;
+  font-size: 18px;
+  position: absolute;
+  top: 220px;
+}
+
+.search-bar__wrapper{
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.book-filter__title{
+  color: #E2DDDD;
+}
+
+.search-bar__input{
+  height: 25px;
+  width: 300px;
+  color: rgb(65, 59, 59);
 }
