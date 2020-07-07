@@ -1,28 +1,21 @@
 import React, { useState }from 'react'
 import BookItemFullData from './BookItemFullData'
-import api from '../services/api'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { onDeleteBook, setSelectedBook, showNodalAddBook } from '../store/actions'
 
-function BookListItem({ item, onEditBook, onDeleteBook, setSelectedBook }) {
+function BookListItem({ item, onDeleteBook, setSelectedBook }) {
     const [isBookDataOpen, setBookDataOpen] = useState(false)
 
     function onDelete(e) {
         e.stopPropagation()
-        deleteItemOnServer(item.id)
+        onDeleteBook(item.id)
     }
 
     function onSelect(e) {
         e.stopPropagation()
-        showNodalAddBook(true);
         setSelectedBook(item);
-    }
-
-    function deleteItemOnServer(id) {
-        api.delete(id).then((resp) => {
-            return onDeleteBook(resp.data)
-        })
+        showNodalAddBook(true);
     }
 
     function showFullBookData() {

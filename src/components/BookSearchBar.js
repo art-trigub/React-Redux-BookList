@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 function BookSearchBar({ searchValue, searchQuery}) {
     function onChange(e) {
         searchQuery(e.target.value)
-        console.log(searchValue)
-
     }
     return (
         <div className="search-bar__wrapper">

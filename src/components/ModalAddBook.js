@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import { saveBook, updateBook, showNodalAddBook } from '../store/actions'
-import api from '../services/api';
+import { onSaveBook, filterBook, onUpdateBook, showNodalAddBook } from '../store/actions'
 
-function ModalAddBook({ saveBook, selectedBook, visibleModal, updateBook, showNodalAddBook }) {
+function ModalAddBook({ onSaveBook, filterBook, selectFilter, selectedBook, visibleModal, onUpdateBook, showNodalAddBook }) {
     const emptyDataBook = {
         id: '',
         title: '',
@@ -29,20 +28,7 @@ function ModalAddBook({ saveBook, selectedBook, visibleModal, updateBook, showNo
         clearInput()
         dataNewBook.id
         ? onUpdateBook(dataNewBook)
-        : onSaveNewBook(dataNewBook)
-    }
-
-    function onUpdateBook(dataNewBook) {
-        api.put(dataNewBook.id, dataNewBook).then((resp) => {
-            return updateBook(resp.data)
-        })
-    }
-
-    function onSaveNewBook(data) {
-        data.id = Date.now()
-        api.post('', dataNewBook).then((resp) => {
-            return saveBook(resp.data)
-        })
+        : onSaveBook(dataNewBook)
     }
 
     function cancelModal() {
@@ -65,15 +51,17 @@ function ModalAddBook({ saveBook, selectedBook, visibleModal, updateBook, showNo
         <div className="modal-add-book__wrapper">
             {visibleModal
             ?
-            <div>
-                <form action="">
-                    <input className="modal-add-book__input" onChange={onChange} type="text" name="title" value={dataNewBook.title} placeholder="Title"/>
-                    <input className="modal-add-book__input" onChange={onChange} type="text" name="author" value={dataNewBook.author} placeholder="Author"/>
-                    <input className="modal-add-book__input" onChange={onChange} type="text" name="description" value={dataNewBook.description} placeholder="Description"/>
-                    <input className="modal-add-book__input" onChange={onChange} type="text" name="photo" value={dataNewBook.photo} placeholder="Photo"/>
-                    <button className="modal-add-book__button-save" onClick={onAddNewBook}>Save</button>
-                </form>
-                <button className="modal-add-book__button-cancel" onClick={cancelModal}>Cancel</button>
+            <div className="modal-add-book__fill">
+                <div>
+                    <form action="">
+                        <input className="modal-add-book__input" onChange={onChange} type="text" name="title" value={dataNewBook.title} placeholder="Title"/>
+                        <input className="modal-add-book__input" onChange={onChange} type="text" name="author" value={dataNewBook.author} placeholder="Author"/>
+                        <input className="modal-add-book__input" onChange={onChange} type="text" name="description" value={dataNewBook.description} placeholder="Description"/>
+                        <input className="modal-add-book__input" onChange={onChange} type="text" name="photo" value={dataNewBook.photo} placeholder="Photo"/>
+                        <button className="modal-add-book__button-save" onClick={onAddNewBook}>Save</button>
+                    </form>
+                    <button className="modal-add-book__button-cancel" onClick={cancelModal}>Cancel</button>
+                </div>
             </div>
             :
             <div>
@@ -86,15 +74,17 @@ function ModalAddBook({ saveBook, selectedBook, visibleModal, updateBook, showNo
 function mapStateToProps(state) {
     return {
         selectedBook: state.selectedBook,
-        visibleModal: state.visibleModalAddBook
+        visibleModal: state.visibleModalAddBook,
+        selectFilter: state.selectFilter
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        saveBook: bindActionCreators(saveBook, dispatch),
-        updateBook: bindActionCreators(updateBook, dispatch),
-        showNodalAddBook: bindActionCreators(showNodalAddBook, dispatch)
+        onSaveBook: bindActionCreators(onSaveBook, dispatch),
+        onUpdateBook: bindActionCreators(onUpdateBook, dispatch),
+        showNodalAddBook: bindActionCreators(showNodalAddBook, dispatch),
+        filterBook: bindActionCreators(filterBook, dispatch)
     }
 }
 

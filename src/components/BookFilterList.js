@@ -1,26 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { filterBook, addAuthorToList, addPropertyToBookList } from '../store/actions'
 
 function BookFilterList({ bookList, addPropertyToBookList, filterAuthorList, filterBook, addAuthorToList }) {
-    let authorList = []
-    bookList.map((item => {
-        return authorList.push(item.author)
-    }))
+    useEffect(() => {
+        bookList.forEach((item) => {
+            addAuthorToList(item.author)
+        })
+    }, [bookList])
+    
 
-    function onChangeFilter(e) {
-        let author = e.target.name;
-        let isCheckedInput = e.target.checked;
-        console.log(bookList)
-        filterBook({author: author, isChecked: isCheckedInput})
+    function onChangeFilter(value) {
+        filterBook(value)
+        if(value === "Выберите автора") addPropertyToBookList(true)
     }
 
-    return (
+    return (        
         <div className="book-filter__wrapper">
-            {authorList.map((elem, index) => (
-                <div className="book-filter__title" key={index}>{elem}<input name={elem} type="checkbox" onChange={onChangeFilter} elem={elem}/></div>
-            ))}
+            <select className="book-filter__title" onChange={({target}) => onChangeFilter(target.value)}>
+                <option>Выберите автора</option>
+                {filterAuthorList.map((elem, index) => (
+                    <option key={index} value={elem} name={elem}>{elem}</option>
+                ))}
+            </select>
         </div>
     )
 }

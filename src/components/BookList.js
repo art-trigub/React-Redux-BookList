@@ -2,19 +2,12 @@ import React from 'react'
 import {connect} from 'react-redux'
 import BookListItem from './BookListItem'
 
-function BookList({ bookListDefault, filterAuthorList, searchValue }) {
+function BookList({ bookListDefault, searchValue, isLoading }) {
     let bookList = bookListDefault
     function checkIncludesSearchQuery() {
-        bookList = bookList.filter(item => item.title.toLowerCase().includes(searchValue))
+        bookList = bookList.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
     }
-    
-    let filtering = false  
-    function checkStartingFiltering() {                        //Костыль для фильтрации, потому что никак не 
-        for(let i = 0; i < bookList.length; i++) {             //получалось отображать список когда изначально
-            if(bookList[i].filtered === true) filtering = true  //все чекбоксы выключены и нужно показать весь список                                                                     //показывать весь список
-        }
-    }
-    checkStartingFiltering();
+    console.log('render Book List', bookList)
 
     checkIncludesSearchQuery()
     return (
@@ -28,13 +21,11 @@ function BookList({ bookListDefault, filterAuthorList, searchValue }) {
                 </div>
             </div>
             <div>
-                {!filtering 
-                ? bookList.map((item) => (
-                    <BookListItem item={item} key={item.id}/>
-                ))
+                {isLoading 
+                ? 'Loading...'
                 : bookList.map((item) => (
                     item.filtered ? <BookListItem item={item} key={item.id}/> : null
-                ))
+                ))               
                 }
             </div>
         </div>
@@ -44,8 +35,8 @@ function BookList({ bookListDefault, filterAuthorList, searchValue }) {
 function mapStateToProps(state) {
     return {
         bookListDefault: state.bookList,
-        filterAuthorList: state.filterAuthorList,
-        searchValue: state.searchValue
+        searchValue: state.searchValue,
+        isLoading: state.isLoading
     }
 }
 

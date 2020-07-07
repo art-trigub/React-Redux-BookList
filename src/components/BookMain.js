@@ -1,23 +1,18 @@
 import React, { useEffect } from 'react'
 import BookList from './BookList'
-import api from '../services/api'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import { saveInitinalList, addPropertyToBookList } from '../store/actions'
+import { saveData } from '../store/actions'
 import ModalAddBook from './ModalAddBook'
 import BookFilterList from './BookFilterList'
 import BookSearchBar from './BookSearchBar'
 
-function BookMain({ saveInitinalList, bookList, addPropertyToBookList }) {
+function BookMain({ saveData }) {
     
     useEffect(() => {
-      api.get('').then(resp => saveData(resp.data))
+        saveData()
     }, [])
 
-    function saveData(data) {
-        saveInitinalList(data)
-    }
-    
     return (
         <div>
             <div className="book-main__header">
@@ -39,8 +34,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        saveInitinalList: bindActionCreators(saveInitinalList, dispatch),
-        addPropertyToBookList: bindActionCreators(addPropertyToBookList, dispatch)
+        saveData: bindActionCreators(saveData, dispatch)
     }
 }
 

@@ -13,7 +13,8 @@ function BookItemFullData({ item, onDeleteBook, setSelectedBook, showNodalAddBoo
 
     function onDelete(e) {
         e.stopPropagation()
-        onDeleteBook(item);
+        onDeleteBook(item.id)
+
     }
 
     return (

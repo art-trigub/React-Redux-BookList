@@ -8,8 +8,11 @@ import {
     FILTER_BOOK_ACTION,
     SEARCH_QUERY_ACTION,
     ADD_AUTHOR_TO_LIST_ACTION,
-    ADD_PROPERTY_TO_BOOK_LIST_ACTION
+    ADD_PROPERTY_TO_BOOK_LIST_ACTION,
+    SAVE_DATA_LOADING_ACTION,
+    FILTER_FOR_NEW_BOOK_ACTION
 } from "./actions";
+
 
 const initialState = {
     bookList: [],
@@ -22,11 +25,16 @@ const initialState = {
     },
     visibleModalAddBook: false,
     searchValue: '',
-    filterAuthorList: []
+    filterAuthorList: [],
+    isLoading: false,
+    selectFilter: 'Выберите автора'
 }
 
 export default function (state = initialState, action) {
     switch(action.type) {
+
+        case SAVE_DATA_LOADING_ACTION:
+            return {...state, isLoading: action.payload}
 
         case SAVE_INITIAL_LIST_ACTION:
             return {...state, bookList: action.payload}
@@ -45,6 +53,7 @@ export default function (state = initialState, action) {
             })}
 
         case SET_SELECTED_BOOK_ACTION:
+            console.log(state.selectedBook)
             return {...state, selectedBook: action.payload, visibleModalAddBook: true}
 
         case SHOW_MODAL_ADD_BOOK_ACTION:
@@ -52,17 +61,29 @@ export default function (state = initialState, action) {
 
         case ADD_PROPERTY_TO_BOOK_LIST_ACTION:
             return {...state, bookList: state.bookList.map((item) => {
-                return {...item, filtered: action.payload}
+                return {...item, filtered: true}
             })}
 
         case ADD_AUTHOR_TO_LIST_ACTION:
-            return {...state, filterAuthorList: action.payload}
+            return {...state, filterAuthorList: state.filterAuthorList.indexOf(action.payload) === -1
+            ? [...state.filterAuthorList, action.payload]
+            : state.filterAuthorList
+        }
 
         case FILTER_BOOK_ACTION:
+            return {...state, selectFilter: action.payload, bookList: state.bookList.map((item) => {
+                return item.author === action.payload
+                ? {...item, filtered: true} 
+                : {...item, filtered: false}
+            })}
+        
+        case FILTER_FOR_NEW_BOOK_ACTION:
             return {...state, bookList: state.bookList.map((item) => {
-                return item.author === action.payload.author
-                ? {...item, filtered: action.payload.isChecked} 
-                : item
+                return item.id === action.payload.id
+                ? (item.author === state.selectFilter) ? {...item, filtered: true} : state.selectFilter == 'Выберите автора' 
+                ? {...item, filtered: true} 
+                : {...item, filtered: false}
+                : {...item}
             })}
 
         case SEARCH_QUERY_ACTION:
